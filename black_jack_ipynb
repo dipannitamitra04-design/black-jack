@@ -1,0 +1,227 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyPjYXTgOU6up613GSZtk6RL",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/dipannitamitra04-design/black-jack/blob/main/black_jack_ipynb\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 1,
+      "metadata": {
+        "id": "pfuOt8JV5vl8"
+      },
+      "outputs": [],
+      "source": [
+        "import random"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "card_categories = ['Heatrs','Diamonds','Clubs','Spades']\n",
+        "cards_list = ['Ace','2','3','4','5','6','7','8','9','10','jack','Queen','King']\n",
+        "deck = [(card, category) for category in card_categories for card in cards_list]"
+      ],
+      "metadata": {
+        "id": "jqXcR4-RAYru"
+      },
+      "execution_count": 16,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def card_values(card):\n",
+        "    if card[0] in['jack','Quenn','King']:\n",
+        "        return 10\n",
+        "    elif card[0] ==\"Ace\":\n",
+        "        return 11\n",
+        "    else:\n",
+        "         return int(card[0])\n"
+      ],
+      "metadata": {
+        "id": "aisf1Le2B65M"
+      },
+      "execution_count": 14,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "random.shuffle(deck)\n",
+        "player_card = [deck.pop(),deck.pop()]\n",
+        "dealer_card = [deck.pop(),deck.pop()]"
+      ],
+      "metadata": {
+        "id": "xu5-Yx51D5gV"
+      },
+      "execution_count": 19,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "while True:\n",
+        "  player_score = sum(card_values(card) for card in player_card)\n",
+        "  dealer_score = sum(card_values(card) for card in dealer_card)\n",
+        "  print(\"Cards player Has:\",player_card)\n",
+        "  print(\"score of the player:\", player_score)\n",
+        "  print(\"\\n\")\n",
+        "  choice = input('What do you want?[\"Play\" to request another card, \"Stop\" to stop]').lower()\n",
+        "  if choice == \"play\":\n",
+        "     new_card = deck.pop()\n",
+        "     player_card.append(new_card)\n",
+        "  elif choice == \"stop\":\n",
+        "    break\n",
+        "  else:\n",
+        "    print(\"Invalid choice\")\n",
+        "    continue\n",
+        "\n",
+        "  if player_score > 21:\n",
+        "     print(\"cards Dealer has:\", dealer_card)\n",
+        "     print(\"score of the player dealer:\",dealer_score)\n",
+        "     print(\"Cards Players has:\",player_card)\n",
+        "     print(\"score of the player:\",player_score)\n",
+        "     print(\"Dealers wins(players loss because player score is exceding 21)\")\n",
+        "     break"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "fw3vJFALFZMw",
+        "outputId": "5c1698c9-d202-4533-c310-0f21504f4ba4"
+      },
+      "execution_count": 30,
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "Cards player Has: [('10', 'Spades'), ('Ace', 'Diamonds')]\n",
+            "score of the player: 21\n",
+            "\n",
+            "\n",
+            "What do you want?[\"Play\" to request another card, \"Stop\" to stop]stop\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#dealer has to draw cards now\n",
+        "while dealer_score < 17:\n",
+        "    new_card = deck.pop()\n",
+        "    dealer_card.append(new_card)\n",
+        "    dealer_score += card_value(new_card)\n",
+        "\n",
+        "print(\"Cards Dealer Has:\", dealer_card)\n",
+        "print(\"Score Of The Dealer:\", dealer_score)\n",
+        "print(\"\\n\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "u06JNnHDKDdG",
+        "outputId": "67a94b97-b798-4b73-c92f-9c4a44060bac"
+      },
+      "execution_count": 32,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Cards Dealer Has: [('9', 'Diamonds'), ('Ace', 'Spades')]\n",
+            "Score Of The Dealer: 20\n",
+            "\n",
+            "\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#decision wala code hai ye omggg who will win guess karna\n",
+        "if dealer_score > 21:\n",
+        "    print(\"Cards Dealer Has:\", dealer_card)\n",
+        "    print(\"Score Of The Dealer:\", dealer_score)\n",
+        "    print(\"Cards Player Has:\", player_card)\n",
+        "    print(\"Score Of The Player:\", player_score)\n",
+        "    print(\"Player wins (Dealer Loss Because Dealer Score is exceeding 21)\")\n",
+        "elif player_score > dealer_score:\n",
+        "    print(\"Cards Dealer Has:\", dealer_card)\n",
+        "    print(\"Score Of The Dealer:\", dealer_score)\n",
+        "    print(\"Cards Player Has:\", player_card)\n",
+        "    print(\"Score Of The Player:\", player_score)\n",
+        "    print(\"Player wins (Player Has High Score than Dealer)\")\n",
+        "elif dealer_score > player_score:\n",
+        "    print(\"Cards Dealer Has:\", dealer_card)\n",
+        "    print(\"Score Of The Dealer:\", dealer_score)\n",
+        "    print(\"Cards Player Has:\", player_card)\n",
+        "    print(\"Score Of The Player:\", player_score)\n",
+        "    print(\"Dealer wins (Dealer Has High Score than Player)\")\n",
+        "else:\n",
+        "    print(\"Cards Dealer Has:\", dealer_card)\n",
+        "    print(\"Score Of The Dealer:\", dealer_score)\n",
+        "    print(\"Cards Player Has:\", player_card)\n",
+        "    print(\"Score Of The Player:\", player_score)\n",
+        "    print(\"It's a tie.\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "WF9uV9WhcIuv",
+        "outputId": "a9d95248-d121-43bf-c9b5-d860a1d2c16d"
+      },
+      "execution_count": 31,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Cards Dealer Has: [('9', 'Diamonds'), ('Ace', 'Spades')]\n",
+            "Score Of The Dealer: 20\n",
+            "Cards Player Has: [('10', 'Spades'), ('Ace', 'Diamonds')]\n",
+            "Score Of The Player: 21\n",
+            "Player wins (Player Has High Score than Dealer)\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "id": "jNe8URwacpZk"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
